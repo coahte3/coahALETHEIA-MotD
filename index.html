@@ -241,30 +241,14 @@
         </div>
     </div>
 
-    <script>
-        // 現在の曜日を取得 (0: 日曜日, 1: 月曜日, ... 3: 水曜日, ...)
-        const currentDay = new Date().getDay();
-        
-        // ページ要素をすべて取得
-        const pageDefault = document.getElementById('page-default');
-        const pageDiscord = document.getElementById('page-discord');
-        const pageWednesday = document.getElementById('page-wednesday');
-        const pageWeekend = document.getElementById('page-weekend');
+<script>
+        // すべてのページを一度非表示にする（念のため）
+        document.getElementById('page-default').classList.remove('active');
+        document.getElementById('page-discord').classList.remove('active');
+        document.getElementById('page-weekend').classList.remove('active');
 
-        // 曜日ごとに表示するページを振り分けるよ！
-        if (currentDay === 3) {
-            // 3 = 水曜日なら「こあのルール付き3ページ目」を表示！
-            pageWednesday.classList.add('active');
-        } else if (currentDay === 1 || currentDay === 2) {
-            // 月・火は1ページ目
-            pageDefault.classList.add('active');
-        } else if (currentDay === 4 || currentDay === 5) {
-            // 木・金はDiscord案内
-            pageDiscord.classList.add('active');
-        } else {
-            // 土・日は週末用画面
-            pageWeekend.classList.add('active');
-        }
+        // 🌟 3ページ目（水曜日用だったルール画面）をいつでも強制的に表示！
+        document.getElementById('page-wednesday').classList.add('active');
     </script>
 </body>
 </html>
