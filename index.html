@@ -2,285 +2,217 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALETHEIA MOTD</title>
+    <title>L4D2 MOTD - Io Edition Style Master</title>
+    <style id="motd-user-config">
+        .p2-bg { content: url("https://i.imgur.com/j8zPaIp.gif"); }
+        .mon-bg { content: url("https://i.imgur.com/Qib6HOc.gif"); } 
+        .tue-bg { content: url("https://i.imgur.com/GlFS3XP.gif"); }
+        .wed-bg { content: url("https://i.imgur.com/ypykmUq.gif"); } 
+        .thu-bg { content: url("https://i.imgur.com/zP3yZnt.gif"); }
+        .fri-bg { content: url("https://i.imgur.com/Xumx4I2.gif"); } 
+        .sat-bg { content: url("https://i.imgur.com/7V0V5Gk.gif"); }
+        .sun-bg { content: url("https://i.imgur.com/yzhBM6x.gif"); }
+        .mon-sub::before { content: "Welcome Back . Monday Survival ."; }
+        .tue-sub::before { content: "Welcome Survivor . Stay Calm. Stay Alive ."; }
+        .wed-sub::before { content: "Midweek Mode Activated . Keep Moving Forward ."; }
+        .thu-sub::before { content: "Almost Weekend . One More Push ."; }
+        .fri-sub::before { content: "Friday Night Survival . Let's Have Fun ."; }
+        .sat-sub::before { content: "Weekend Energy MAX . No Sleep Tonight ."; }
+        .sun-sub::before { content: "Good Night Survivors . Take It Easy ."; }
+
+        .mon-m::before { content: "月曜日を生き延びろ。"; }
+        .tue-m::before { content: "焦らず、今日も一歩ずつ。"; }
+        .wed-m::before { content: "水曜日。まだ終わりじゃない。"; }
+        .thu-m::before { content: "あと少し。"; }
+        .fri-m::before { content: "週末だ。楽しもう。"; }
+        .sat-m::before { content: "今夜は自由時間。"; }
+        .sun-m::before { content: "のんびりいこう。"; }
+    </style>
     <style>
-        /* 全体のスタイル設定 */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            overflow: hidden;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* メインコンテナ */
-        .motd-container {
-            width: 90%;
-            max-width: 900px;
-            height: 85vh;
-            background: rgba(22, 27, 34, 0.9);
-            border: 2px solid #30363d;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        /* ヘッダー */
-        .motd-header {
-            background: linear-gradient(135deg, #1f6feb, #238636);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #30363d;
-        }
-        .motd-header h1 {
-            font-family: 'Impact', sans-serif;
-            font-size: 2.8rem;
-            color: #ffffff;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-            margin-bottom: 5px;
-        }
-        .motd-header p {
-            font-size: 1rem;
-            color: #e6edf3;
-            font-style: italic;
-        }
-
-        /* 🌟 ページ切り替えタブボタンのエリア */
-        .motd-tabs {
-            display: flex;
-            background-color: #161b22;
-            border-bottom: 2px solid #30363d;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 15px;
-            background: none;
-            border: none;
-            color: #8b949e;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-align: center;
-            border-bottom: 3px solid transparent;
-        }
-        .tab-btn:hover {
-            color: #ffffff;
-            background-color: rgba(255,255,255,0.05);
-        }
-        /* アクティブ（現在選択中）なタブの見た目 */
-        .tab-btn.active-tab {
-            color: #58a6ff;
-            border-bottom: 3px solid #58a6ff;
-            background-color: #1f242c;
-        }
-
-        /* メインコンテンツエリア */
-        .motd-body {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-        }
-        .motd-content {
-            display: none; /* 初期状態は全部非表示 */
-        }
-        /* アクティブなコンテンツだけを表示する */
-        .motd-content.active-content {
-            display: block;
-            animation: slideUp 0.4s ease-out;
-        }
-
-        /* 各セクションのデザイン（装飾） */
-        .info-section {
-            background: rgba(33, 38, 45, 0.6);
-            border-left: 4px solid #58a6ff;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 0 8px 8px 0;
-        }
-        .info-section.rules {
-            border-left-color: #da3633; /* ルールは赤 */
-        }
-        .info-section.admins {
-            border-left-color: #238636; /* 管理者は緑 */
-        }
-        .info-title {
-            font-family: 'Impact', Arial, sans-serif;
-            font-size: 1.4rem;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-        .info-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #e6edf3;
-        }
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; background-color: black; overflow: hidden; font-family: 'Helvetica Neue', Arial, sans-serif; }
+        .container { width: 100%; height: 100%; position: relative; }
+        .day-block { display: none; width: 100%; height: 100%; position: absolute; top:0; left:0; }
+        .bg-image-wrapper { width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; background: black; }
+        img.bg-image { width: 100%; height: 100%; object-fit: contain; }
+        .message-box { position: absolute; bottom: 6%; left: 5%; right: 5%; background-color: rgba(10, 10, 12, 0.85); padding: 20px 30px; border-radius: 4px; color: #ffffff; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         
-        ol, ul {
-            padding-left: 20px;
-        }
-        li {
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        li strong {
-            color: #ff7b72;
-        }
-
-        /* フッター */
-        .motd-footer {
-            background: #161b22;
-            padding: 10px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #8b949e;
-            border-top: 1px solid #30363d;
-        }
-
-        /* アニメーション */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* 完璧な文字バランスの設計 */
+        .welcome-server-text { font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: 0.5px; display: block; margin-bottom: 6px; }
+        .day-text { font-size: 24px; font-weight: 900; letter-spacing: 1px; display: block; margin-bottom: 8px; }
+        .date-text { color: #ffffff; font-weight: 500; margin-right: 12px; }
+        .title-en { font-size: 21px; font-weight: 700; letter-spacing: 1px; margin: 0 0 8px 0; color: #e1e1e1; line-height: 1.4; }
+        .msg-jp { font-size: 18px; color: #aaaaaa; margin: 0 0 15px 0; font-weight: 500; }
+        .rules-list { font-size: 18px; color: #cccccc; margin: 0 0 15px 0; font-weight: 500; line-height: 1.6; }
+        .page-btn { display: inline-block; background-color: #28a745; color: white; text-decoration: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; font-size: 16px; margin-top: 15px; }
+        .page-btn:hover { background-color: #218838; }
+        .page-toggle-input { display: none; } .page-2 { display: none; } .page-toggle-input:checked ~ .page-1 { display: none; } .page-toggle-input:checked ~ .page-2 { display: block; }
+        .url-display { background: rgba(28, 28, 31, 0.9); border: 1px solid rgba(255,255,255,0.1); padding: 12px 15px; border-radius: 4px; font-size: 18px; font-weight: bold; width: 90%; font-family: monospace; cursor: pointer; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); margin-top: 5px; }
     </style>
 </head>
 <body>
+<div class="container">
 
-    <div class="motd-container">
-        <div class="motd-header">
-            <h1>ALETHEIA SERVER</h1>
-            <p>Welcome to our server. Enjoy your stay!</p>
+    <!-- ─── 1. 月曜日 ─── -->
+    <div id="mon" class="day-block">
+        <input type="checkbox" id="p-mon" class="page-toggle-input">
+        <div class="page-1">
+            <div class="bg-image-wrapper"><img class="bg-image mon-bg"></div>
+            <div class="message-box"><span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span><span class="day-text" id="t-mon"></span><h1 class="title-en mon-sub"></h1><p class="msg-jp mon-m"></p><button type="button" class="page-btn" onclick="document.getElementById('p-mon').checked=true;">次のページ（ルール）に進む ➔</button></div>
         </div>
-
-        <div class="motd-tabs">
-            <button class="tab-btn active-tab" onclick="switchPage(1)">1. Welcome</button>
-            <button class="tab-btn" onclick="switchPage(2)">2. Rules (簡易版)</button>
-            <button class="tab-btn" onclick="switchPage(3)">3. Server Details</button>
-        </div>
-
-        <div class="motd-body">
-
-            <div id="page1" class="motd-content active-content">
-                <div class="info-section">
-                    <div class="info-title">✨ Welcome to ALETHEIA</div>
-                    <div class="info-text">
-                        サーバーへようこそ！楽しんでいってね！<br>
-                        上のタブをポチポチ押すと、ルールやサーバーの詳細情報（アドオン・管理者一覧）が見られるよ！
-                    </div>
-                </div>
+        <div class="page-2">
+            <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
+            <div class="message-box">
+                <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                <div class="rules-list"><div>1. 仲間を撃たない（FF注意）</div><div>2. 助け合いの精神を忘れずに！</div><div>3. Discordへの参加もお待ちしています。</div></div>
+                <input type="text" id="u-mon" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
+                <button type="button" class="page-btn" onclick="document.getElementById('p-mon').checked=false;">最初のページに戻る ↩</button>
             </div>
-
-            <div id="page2" class="motd-content">
-                <div class="info-section rules">
-                    <div class="info-title">⚠️ サーバーのメインルール</div>
-                    <ol>
-                        <li>他のプレイヤーの邪魔をしないこと！助けが必要なら向こうから言ってきます。</li>
-                        <li>チャットやボイスチャットで連投（スパム）しないこと。</li>
-                        <li>なによりも、みんなで楽しむこと！✨</li>
-                    </ol>
-                </div>
-            </div>
-
-            <div id="page3" class="motd-content">
-                
-                <div class="info-section">
-                    <div class="info-title">ℹ️ About This Server</div>
-                    <div class="info-text">
-                        This server is running ULX.<br>
-                        To edit this default MOTD, open XGUI->Settings->Server->ULX MOTD, or edit data\ulx\motd.txt.
-                    </div>
-                </div>
-
-                <div class="info-section rules">
-                    <div class="info-title">📋 Rules</div>
-                    <ol>
-                        <li><strong>DON'T MESS WITH OTHER PLAYERS' STUFF.</strong> If they want help, they'll ask!</li>
-                        <li>Don't spam.</li>
-                        <li>Have fun.</li>
-                    </ol>
-                </div>
-
-                <div class="info-section">
-                    <div class="info-title">📢 Reporting Rulebreakers</div>
-                    <ul>
-                        <li>Contact an available admin on this server and let them know.</li>
-                        <li>Use <strong>@</strong> before typing a chat message to send it to admins.</li>
-                        <li>If no admin is available, note the players name and the current time, then let an admin know as soon as they are available.</li>
-                    </ul>
-                </div>
-
-                <div class="info-section">
-                    <div class="info-title">🔧 Installed Addons</div>
-                    <div class="info-text">
-                        This server features various custom workshop and regular addons via ULX Mods!
-                    </div>
-                </div>
-
-                <div class="info-section admins">
-                    <div class="info-title">🛡️ Our Admins</div>
-                    <ul>
-                        <li>👑 superadmin</li>
-                        <li>⚔️ admin</li>
-                    </ul>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="motd-footer">
-            © 2026 ALETHEIA SERVER | Powered by ULX & GitHub Pages
         </div>
     </div>
 
-    <script>
-        function switchPage(pageNumber) {
-            // すべてのコンテンツをいったん非表示にする
-            const contents = document.querySelectorAll('.motd-content');
-            contents.forEach(content => content.classList.remove('active-content'));
+    <!-- ─── 2. 火曜日 ─── -->
+    <div id="tue" class="day-block">
+        <input type="checkbox" id="p-tue" class="page-toggle-input">
+        <div class="page-1">
+            <div class="bg-image-wrapper"><img class="bg-image tue-bg"></div>
+            <div class="message-box"><span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span><span class="day-text" id="t-tue"></span><h1 class="title-en tue-sub"></h1><p class="msg-jp tue-m"></p><button type="button" class="page-btn" onclick="document.getElementById('p-tue').checked=true;">次のページ（ルール）に進む ➔</button></div>
+        </div>
+        <div class="page-2">
+            <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
+            <div class="message-box">
+                <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                <div class="rules-list"><div>1. 仲間を撃たない（FF注意）</div><div>2. 助け合いの精神を忘れずに！</div><div>3. Discordへの参加もお待ちしています。</div></div>
+                <input type="text" id="u-tue" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
+                <button type="button" class="page-btn" onclick="document.getElementById('p-tue').checked=false;">最初のページに戻る ↩</button>
+            </div>
+        </div>
+    </div>
 
-            // すべてのタブボタンの色を元に戻す
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active-tab'));
+    <!-- ─── 3. 水曜日 ─── -->
+    <div id="wed" class="day-block">
+        <input type="checkbox" id="p-wed" class="page-toggle-input">
+        <div class="page-1">
+            <div class="bg-image-wrapper"><img class="bg-image wed-bg"></div>
+            <div class="message-box"><span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span><span class="day-text" id="t-wed"></span><h1 class="title-en wed-sub"></h1><p class="msg-jp wed-m"></p><button type="button" class="page-btn" onclick="document.getElementById('p-wed').checked=true;">次のページ（ルール）に進む ➔</button></div>
+        </div>
+        <div class="page-2">
+            <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
+            <div class="message-box">
+                <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                <div class="rules-list"><div>1. 仲間を撃たない（FF注意）</div><div>2. 助け合いの精神を忘れずに！</div><div>3. Discordへの参加もお待ちしています。</div></div>
+                <input type="text" id="u-wed" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
+                <button type="button" class="page-btn" onclick="document.getElementById('p-wed').checked=false;">最初のページに戻る ↩</button>
+            </div>
+        </div>
+    </div>
 
-            // クリックされたページのコンテンツとボタンだけを「アクティブ」にするよ！
-            document.getElementById('page' + pageNumber).classList.add('active-content');
-            tabs[pageNumber - 1].add('active-tab'); // インデックスは0から始まるので-1するよ
-        }
+    <!-- ─── 4. 木曜日 ─── -->
+    <div id="thu" class="day-block">
+        <input type="checkbox" id="p-thu" class="page-toggle-input">
+        <div class="page-1">
+            <div class="bg-image-wrapper"><img class="bg-image thu-bg"></div>
+            <div class="message-box"><span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span><span class="day-text" id="t-thu"></span><h1 class="title-en thu-sub"></h1><p class="msg-jp thu-m"></p><button type="button" class="page-btn" onclick="document.getElementById('p-thu').checked=true;">次のページ（ルール）に進む ➔</button></div>
+        </div>
+        <div class="page-2">
+            <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
+            <div class="message-box">
+                <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                <div class="rules-list"><div>1. 仲間を撃たない（FF注意）</div><div>2. 助け合いの精神を忘れずに！</div><div>3. Discordへの参加もお待ちしています。</div></div>
+                <input type="text" id="u-thu" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
+                <button type="button" class="page-btn" onclick="document.getElementById('p-thu').checked=false;">最初のページに戻る ↩</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── 5. 金曜日 ─── -->
+    <div id="fri" class="day-block">
+        <input type="checkbox" id="p-fri" class="page-toggle-input">
+        <div class="page-1">
+            <div class="bg-image-wrapper"><img class="bg-image fri-bg"></div>
+            <div class="message-box"><span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span><span class="day-text" id="t-fri"></span><h1 class="title-en fri-sub"></h1><p class="msg-jp fri-m"></p><button type="button" class="page-btn" onclick="document.getElementById('p-fri').checked=true;">次のページ（ルール）に進む ➔</button></div>
+        </div>
+        <div class="page-2">
+            <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
+            <div class="message-box">
+                <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                <div class="rules-list"><div>1. 仲間を撃たない（FF注意）</div><div>2. 助け合いの精神を忘れずに！</div><div>3. Discordへの参加もお待ちしています。</div></div>
+                <input type="text" id="u-fri" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
+                <button type="button" class="page-btn" onclick="document.getElementById('p-fri').checked=false;">最初のページに戻る ↩</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── 6. 土曜日 ─── -->
+    <div id="sat" class="day-block">
+        <input type="checkbox" id="p-sat" class="page-toggle-input">
+        <div class="page-1">
+            <div class="bg-image-wrapper"><img class="bg-image sat-bg"></div>
+            <div class="message-box"><span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span><span class="day-text" id="t-sat"></span><h1 class="title-en sat-sub"></h1><p class="msg-jp sat-m"></p><button type="button" class="page-btn" onclick="document.getElementById('p-sat').checked=true;">次のページ（ルール）に進む ➔</button></div>
+        </div>
+        <div class="page-2">
+            <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
+            <div class="message-box">
+                <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                <div class="rules-list"><div>1. 仲間を撃たない（FF注意）</div><div>2. 助け合いの精神を忘れずに！</div><div>3. Discordへの参加もお待ちしています。</div></div>
+                <input type="text" id="u-sat" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
+                <button type="button" class="page-btn" onclick="document.getElementById('p-sat').checked=false;">最初のページに戻る ↩</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── 7. 日曜日 ─── -->
+    <div id="sun" class="day-block">
+        <input type="checkbox" id="p-sun" class="page-toggle-input">
+        <div class="page-1">
+            <div class="bg-image-wrapper"><img class="bg-image sun-bg"></div>
+            <div class="message-box"><span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span><span class="day-text" id="t-sun"></span><h1 class="title-en sun-sub"></h1><p class="msg-jp sun-m"></p><button type="button" class="page-btn" onclick="document.getElementById('p-sun').checked=true;">次のページ（ルール）に進む ➔</button></div>
+        </div>
+        <div class="page-2">
+            <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
+            <div class="message-box">
+                <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                <div class="rules-list"><div>1. 仲間を撃たない（FF注意）</div><div>2. 助け合いの精神を忘れずに！</div><div>3. Discordへの参加もお待ちしています。</div></div>
+                <input type="text" id="u-sun" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
+                <button type="button" class="page-btn" onclick="document.getElementById('p-sun').checked=false;">最初のページに戻る ↩</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    (function() {
+        var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        var shortDays = { mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat", sun: "Sun" };
+        var colors = { mon: "#3498db", tue: "#2ecc71", wed: "#f1c40f", thu: "#9b59b6", fri: "#ff6600", sat: "#e91e63", sun: "#95a5a6" };
         
-        // お姉ちゃんのちょっとしたバグ対策パッチ
-        // クラス名追加の書き方を調整
-        function switchPage(pageNumber) {
-            document.getElementById('page1').classList.remove('active-content');
-            document.getElementById('page2').classList.remove('active-content');
-            document.getElementById('page3').classList.remove('active-content');
+        var now = new Date();
+        var today = days[now.getDay()];
+        var target = document.getElementById(today);
+        
+        if (target) {
+            target.style.display = 'block';
+            var color = colors[today];
             
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(t => t.classList.remove('active-tab'));
-
-            document.getElementById('page' + pageNumber).classList.add('active-content');
-            tabs[pageNumber - 1].classList.add('active-tab');
+            var yy = String(now.getFullYear()).slice(-2);
+            var m = now.getMonth() + 1;
+            var d = now.getDate();
+            var dateStr = yy + '/' + m + '.' + d;
+            
+            var textEl = document.getElementById('t-' + today);
+            if (textEl) {
+                textEl.innerHTML = '<span class="date-text">' + dateStr + '</span><span style="color:' + color + ';">(' + shortDays[today] + ')</span>';
+            }
+            
+            var boxes = target.getElementsByClassName('message-box');
+            for (var i = 0; i < boxes.length; i++) {
+                boxes[i].style.borderLeft = "5px solid " + color;
+            }
+            
+            var urlEl = document.getElementById('u-' + today);
+            if (urlEl) { urlEl.style.color = color; }
         }
-    </script>
+    })();
+</script>
 </body>
 </html>
