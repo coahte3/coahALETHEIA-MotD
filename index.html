@@ -13,21 +13,24 @@
         .fri-bg { content: url("https://i.imgur.com/Xumx4I2.gif"); } 
         .sat-bg { content: url("https://i.imgur.com/7V0V5Gk.gif"); }
         .sun-bg { content: url("https://i.imgur.com/yzhBM6x.gif"); }
-        .mon-sub::before { content: "Welcome Back . Monday Survival ."; }
-        .tue-sub::before { content: "Welcome Survivor . Stay Calm. Stay Alive ."; }
-        .wed-sub::before { content: "Midweek Mode Activated . Keep Moving Forward ."; }
-        .thu-sub::before { content: "Almost Weekend . One More Push ."; }
-        .fri-sub::before { content: "Friday Night Survival . Let's Have Fun ."; }
-        .sat-sub::before { content: "Weekend Energy MAX . No Sleep Tonight ."; }
-        .sun-sub::before { content: "Good Night Survivors . Take It Easy ."; }
+        
+        /* 💡 英語のサブタイトルもGmod用に「Sandbox / Sandbox Life」等に変更したよ！ */
+        .mon-sub::before { content: "Welcome Back . Monday Sandbox Life ."; }
+        .tue-sub::before { content: "Welcome Player . Stay Creative. Have Fun ."; }
+        .wed-sub::before { content: "Midweek Building Activated . Keep On Creating ."; }
+        .thu-sub::before { content: "Almost Weekend . Show Me Your Contraption ."; }
+        .fri-sub::before { content: "Friday Night Gmod . Let's Party Tonight ."; }
+        .sat-sub::before { content: "Weekend Sandbox MAX . Build Anything You Want ."; }
+        .sun-sub::before { content: "Good Night Players . Relaxing Sunday ."; }
 
-        .mon-m::before { content: "月曜日を生き延びろ。"; }
-        .tue-m::before { content: "焦らず、今日も一歩ずつ。"; }
-        .wed-m::before { content: "水曜日。まだ終わりじゃない。"; }
-        .thu-m::before { content: "あと少し。"; }
-        .fri-m::before { content: "週末だ。楽しもう。"; }
-        .sat-m::before { content: "今夜は自由時間。"; }
-        .sun-m::before { content: "のんびりいこう。"; }
+        /* 💡 日本語のメッセージもGmod用に完全リニューアル！ */
+        .mon-m::before { content: "今週も始まったよ！のんびり物作りしよう。"; }
+        .tue-m::before { content: "焦らず、今日も自分のペースで楽しもう！"; }
+        .wed-m::before { content: "水曜日。今日は何を作ってみる？"; }
+        .thu-m::before { content: "あと少しで週末！アドオンの準備はいい？"; }
+        .fri-m::before { content: "華金だーーっ！夜更かしして遊びつくそう！"; }
+        .sat-m::before { content: "最高の週末。重いプロップを出しても怒らないでね。"; }
+        .sun-m::before { content: "日曜日。まったりお喋りしながら過ごそう。"; }
     </style>
     <style>
         html, body { margin: 0; padding: 0; width: 100%; height: 100%; background-color: black; overflow: hidden; font-family: 'Helvetica Neue', Arial, sans-serif; }
@@ -44,11 +47,9 @@
         .msg-jp { font-size: 18px; color: #aaaaaa; margin: 0 0 15px 0; font-weight: 500; }
         .rules-list { font-size: 18px; color: #cccccc; margin: 0 0 15px 0; font-weight: 500; line-height: 1.6; }
         
-        /* ボタン全般のスタイル */
         .page-btn { display: inline-block; background-color: #28a745; color: white; text-decoration: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; font-size: 16px; margin-top: 15px; }
         .page-btn:hover { background-color: #218838; }
         
-        /* 🌟 Discordボタンと並びの調整スタイル */
         .discord-container { display: flex; align-items: center; gap: 10px; width: 90%; margin-top: 5px; }
         .url-display { flex: 1; background: rgba(28, 28, 31, 0.9); border: 1px solid rgba(255,255,255,0.1); padding: 12px 15px; border-radius: 4px; font-size: 18px; font-weight: bold; font-family: monospace; cursor: pointer; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); }
         
@@ -86,7 +87,7 @@
                 <div class="page-1">
                     <div class="bg-image-wrapper"><img class="bg-image ${day}-bg"></div>
                     <div class="message-box">
-                        <span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span>
+                        <span class="welcome-server-text">Welcome to "ALETHEIA" Gmod Server.</span>
                         <span class="day-text" id="t-${day}"></span>
                         <h1 class="title-en ${day}-sub"></h1>
                         <p class="msg-jp ${day}-m"></p>
@@ -97,11 +98,11 @@
                 <div class="page-2">
                     <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
                     <div class="message-box">
-                        <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                        <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px; color:#ff7b72;">SERVER RULES</h1>
                         <div class="rules-list">
-                            <div>1. 仲間を撃たない（FF注意）</div>
-                            <div>2. 助け合いの精神を忘れずに！</div>
-                            <div>3. Discordへの参加もお待ちしています。</div>
+                            <div>1. <strong>DON'T MESS WITH OTHER PLAYERS' STUFF.</strong> (他の人の作った物で勝手に遊ばない！手伝う時は一言聞いてね)</div>
+                            <div>2. Don't spam. (プロップの連投やスパム、荒らし行為はNG！)</div>
+                            <div>3. Have fun. (なによりも、みんなで思いっきり楽しむこと！✨)</div>
                         </div>
                         
                         <div class="discord-container">
@@ -109,7 +110,7 @@
                             <a href="https://discord.gg/xV62vjSE2" class="discord-link-btn" target="_blank">Discordに参加 ➔</a>
                         </div>
 
-                        <button type="button" class="page-btn" onclick="document.getElementById('p-${day}').checked=false;" style="margin-top: 20px;">最初のページに戻る ↩</button>
+                        <button type="button" class="page-btn" onclick="document.getElementById('p-${day}').checked=false;" style="margin-top: 20px; background-color:#6c757d;">最初のページに戻る ↩</button>
                     </div>
                 </div>
             </div>`;
