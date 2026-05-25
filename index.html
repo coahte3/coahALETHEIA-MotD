@@ -43,9 +43,105 @@
         .title-en { font-size: 21px; font-weight: 700; letter-spacing: 1px; margin: 0 0 8px 0; color: #e1e1e1; line-height: 1.4; }
         .msg-jp { font-size: 18px; color: #aaaaaa; margin: 0 0 15px 0; font-weight: 500; }
         .rules-list { font-size: 18px; color: #cccccc; margin: 0 0 15px 0; font-weight: 500; line-height: 1.6; }
+        
+        /* ボタン全般のスタイル */
         .page-btn { display: inline-block; background-color: #28a745; color: white; text-decoration: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; font-size: 16px; margin-top: 15px; }
         .page-btn:hover { background-color: #218838; }
         
+        /* 🌟 Discordボタンと並びの調整スタイル */
+        .discord-container { display: flex; align-items: center; gap: 10px; width: 90%; margin-top: 5px; }
+        .url-display { flex: 1; background: rgba(28, 28, 31, 0.9); border: 1px solid rgba(255,255,255,0.1); padding: 12px 15px; border-radius: 4px; font-size: 18px; font-weight: bold; font-family: monospace; cursor: pointer; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); }
+        
+        .discord-link-btn { display: inline-block; background-color: #5865F2; color: white; text-decoration: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 4px; transition: background-color 0.2s; white-space: nowrap; }
+        .discord-link-btn:hover { background-color: #4752C4; }
+
         .page-toggle-input { display: none; } 
         .page-2 { display: none; } 
-        .page-toggle-input:checked ~ .page
+        .page-toggle-input:checked ~ .page-1 { display: none; } 
+        .page-toggle-input:checked ~ .page-2 { display: block; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div id="dynamic-motd-target"></div>
+
+</div>
+
+<script>
+    (function() {
+        var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        var shortDays = { mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat", sun: "Sun" };
+        var colors = { mon: "#3498db", tue: "#2ecc71", wed: "#f1c40f", thu: "#9b59b6", fri: "#ff6600", sat: "#e91e63", sun: "#95a5a6" };
+        
+        var now = new Date();
+        var today = days[now.getDay()];
+
+        var containerHtml = '';
+        days.forEach(function(day) {
+            containerHtml += `
+            <div id="${day}" class="day-block">
+                <input type="checkbox" id="p-${day}" class="page-toggle-input">
+                
+                <div class="page-1">
+                    <div class="bg-image-wrapper"><img class="bg-image ${day}-bg"></div>
+                    <div class="message-box">
+                        <span class="welcome-server-text">Welcome to "ALETHEIA" Server.</span>
+                        <span class="day-text" id="t-${day}"></span>
+                        <h1 class="title-en ${day}-sub"></h1>
+                        <p class="msg-jp ${day}-m"></p>
+                        <button type="button" class="page-btn" onclick="document.getElementById('p-${day}').checked=true;">次のページ（ルール）に進む ➔</button>
+                    </div>
+                </div>
+          
+                <div class="page-2">
+                    <div class="bg-image-wrapper"><img class="bg-image p2-bg"></div>
+                    <div class="message-box">
+                        <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px;">SERVER RULES</h1>
+                        <div class="rules-list">
+                            <div>1. 仲間を撃たない（FF注意）</div>
+                            <div>2. 助け合いの精神を忘れずに！</div>
+                            <div>3. Discordへの参加もお待ちしています。</div>
+                        </div>
+                        
+                        <div class="discord-container">
+                            <input type="text" id="u-${day}" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
+                            <a href="https://discord.gg/xV62vjSE2" class="discord-link-btn" target="_blank">Discordに参加 ➔</a>
+                        </div>
+
+                        <button type="button" class="page-btn" onclick="document.getElementById('p-${day}').checked=false;" style="margin-top: 20px;">最初のページに戻る ↩</button>
+                    </div>
+                </div>
+            </div>`;
+        });
+
+        document.getElementById('dynamic-motd-target').innerHTML = containerHtml;
+      
+        // 今日の曜日を表示する処理
+        var target = document.getElementById(today);
+        if (target) {
+            target.style.display = 'block';
+            var color = colors[today];
+            
+            var yy = String(now.getFullYear()).slice(-2);
+            var m = now.getMonth() + 1;
+            var d = now.getDate();
+            var dateStr = yy + '/' + m + '.' + d;
+            
+            var textEl = document.getElementById('t-' + today);
+            if (textEl) {
+                textEl.innerHTML = '<span class="date-text">' + dateStr + '</span><span style="color:' + color + ';">(' + shortDays[today] + ')</span>';
+            }
+            
+            var boxes = target.getElementsByClassName('message-box');
+            for (var i = 0; i < boxes.length; i++) {
+                boxes[i].style.borderLeft = "5px solid " + color;
+            }
+            
+            var urlEl = document.getElementById('u-' + today);
+            if (urlEl) { urlEl.style.color = color; }
+        }
+    })();
+</script>
+</body>
+</html>
