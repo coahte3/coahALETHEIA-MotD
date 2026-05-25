@@ -28,15 +28,15 @@
             width: 90%;
             max-width: 900px;
             height: 85vh;
-            background: rgba(22, 27, 34, 0.85);
+            background: rgba(22, 27, 34, 0.9);
             border: 2px solid #30363d;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            animation: fadeIn 0.8s ease-out;
+            animation: fadeIn 0.5s ease-out;
         }
 
         /* ヘッダー */
@@ -44,11 +44,11 @@
             background: linear-gradient(135deg, #1f6feb, #238636);
             padding: 20px;
             text-align: center;
-            border-bottom: 2px solid #30363d;
+            border-bottom: 1px solid #30363d;
         }
         .motd-header h1 {
             font-family: 'Impact', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: #ffffff;
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
@@ -60,42 +60,70 @@
             font-style: italic;
         }
 
-        /* メインコンテンツエリア（ここが日替わりで切り替わるよ） */
-        .motd-content {
+        /* 🌟 ページ切り替えタブボタンのエリア */
+        .motd-tabs {
+            display: flex;
+            background-color: #161b22;
+            border-bottom: 2px solid #30363d;
+        }
+        .tab-btn {
             flex: 1;
-            padding: 30px;
+            padding: 15px;
+            background: none;
+            border: none;
+            color: #8b949e;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-btn:hover {
+            color: #ffffff;
+            background-color: rgba(255,255,255,0.05);
+        }
+        /* アクティブ（現在選択中）なタブの見た目 */
+        .tab-btn.active-tab {
+            color: #58a6ff;
+            border-bottom: 3px solid #58a6ff;
+            background-color: #1f242c;
+        }
+
+        /* メインコンテンツエリア */
+        .motd-body {
+            flex: 1;
+            padding: 25px;
             overflow-y: auto;
-            display: none; /* 初期状態は非表示 */
         }
-
-        /* アクティブな日だけ表示 */
-        .active {
+        .motd-content {
+            display: none; /* 初期状態は全部非表示 */
+        }
+        /* アクティブなコンテンツだけを表示する */
+        .motd-content.active-content {
             display: block;
-            animation: slideUp 0.5s ease-out;
+            animation: slideUp 0.4s ease-out;
         }
 
-        /* 3ページ目（水曜日）の専用おしゃれCSSスタイル */
+        /* 各セクションのデザイン（装飾） */
         .info-section {
             background: rgba(33, 38, 45, 0.6);
-            border-left: 4px solid #1f6feb;
+            border-left: 4px solid #58a6ff;
             padding: 15px 20px;
             margin-bottom: 20px;
             border-radius: 0 8px 8px 0;
         }
         .info-section.rules {
-            border-left-color: #da3633; /* ルールは赤色で強調 */
+            border-left-color: #da3633; /* ルールは赤 */
         }
         .info-section.admins {
-            border-left-color: #238636; /* 管理者は緑色で安心感 */
+            border-left-color: #238636; /* 管理者は緑 */
         }
         .info-title {
             font-family: 'Impact', Arial, sans-serif;
             font-size: 1.4rem;
             color: #ffffff;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
         .info-text {
             font-size: 0.95rem;
@@ -103,7 +131,6 @@
             color: #e6edf3;
         }
         
-        /* リストの装飾 */
         ol, ul {
             padding-left: 20px;
         }
@@ -114,23 +141,6 @@
         }
         li strong {
             color: #ff7b72;
-        }
-
-        /* ボタン・リンク関係 */
-        .discord-btn {
-            display: inline-block;
-            background-color: #5865F2;
-            color: white;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: bold;
-            margin-top: 15px;
-            transition: background 0.2s, transform 0.1s;
-        }
-        .discord-btn:hover {
-            background-color: #4752C4;
-            transform: translateY(-2px);
         }
 
         /* フッター */
@@ -145,11 +155,11 @@
 
         /* アニメーション */
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
+            from { opacity: 0; transform: scale(0.98); }
             to { opacity: 1; transform: scale(1); }
         }
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
@@ -158,82 +168,84 @@
 
     <div class="motd-container">
         <div class="motd-header">
-            <h1 id="server-title">ALETHEIA SERVER</h1>
-            <p id="server-desc">Welcome to our server. Enjoy your stay!</p>
+            <h1>ALETHEIA SERVER</h1>
+            <p>Welcome to our server. Enjoy your stay!</p>
         </div>
 
-        <div id="page-default" class="motd-content">
-            <div class="info-section">
-                <div class="info-title">✨ Welcome to ALETHEIA</div>
-                <div class="info-text">
-                    サーバーへようこそ！楽しんでいってね！<br>
-                    今日も元気に生存者を導くか、感染者として暴れ回ろう！
-                </div>
-            </div>
+        <div class="motd-tabs">
+            <button class="tab-btn active-tab" onclick="switchPage(1)">1. Welcome</button>
+            <button class="tab-btn" onclick="switchPage(2)">2. Rules (簡易版)</button>
+            <button class="tab-btn" onclick="switchPage(3)">3. Server Details</button>
         </div>
 
-        <div id="page-discord" class="motd-content">
-            <div class="info-section">
-                <div class="info-title">💬 Official Discord Server</div>
-                <div class="info-text">
-                    コミュニティに参加して、友達を作ったり企画に参加しよう！<br>
-                    <a href="https://discord.gg/xV62vjSE2" class="discord-btn" target="_blank">Discordに参加する</a>
-                </div>
-            </div>
-        </div>
+        <div class="motd-body">
 
-        <div id="page-wednesday" class="motd-content">
-            
-            <div class="info-section">
-                <div class="info-title">ℹ️ About This Server</div>
-                <div class="info-text">
-                    This server is running ULX.<br>
-                    To edit this default MOTD, open XGUI->Settings->Server->ULX MOTD, or edit data\ulx\motd.txt.
+            <div id="page1" class="motd-content active-content">
+                <div class="info-section">
+                    <div class="info-title">✨ Welcome to ALETHEIA</div>
+                    <div class="info-text">
+                        サーバーへようこそ！楽しんでいってね！<br>
+                        上のタブをポチポチ押すと、ルールやサーバーの詳細情報（アドオン・管理者一覧）が見られるよ！
+                    </div>
                 </div>
             </div>
 
-            <div class="info-section rules">
-                <div class="info-title">⚠️ Server Rules</div>
-                <ol>
-                    <li><strong>DON'T MESS WITH OTHER PLAYERS' STUFF.</strong> If they want help, they'll ask!</li>
-                    <li>Don't spam.</li>
-                    <li>Have fun.</li>
-                </ol>
-            </div>
-
-            <div class="info-section">
-                <div class="info-title">📢 Reporting Rulebreakers</div>
-                <ul>
-                    <li>Contact an available admin on this server and let them know.</li>
-                    <li>Use <strong>@</strong> before typing a chat message to send it to admins.</li>
-                    <li>If no admin is available, note the players name and the current time, then let an admin know as soon as they are available.</li>
-                </ul>
-            </div>
-
-            <div class="info-section">
-                <div class="info-title">🔧 Installed Addons</div>
-                <div class="info-text">
-                    This server features various custom workshop and regular addons via ULX Mods!
+            <div id="page2" class="motd-content">
+                <div class="info-section rules">
+                    <div class="info-title">⚠️ サーバーのメインルール</div>
+                    <ol>
+                        <li>他のプレイヤーの邪魔をしないこと！助けが必要なら向こうから言ってきます。</li>
+                        <li>チャットやボイスチャットで連投（スパム）しないこと。</li>
+                        <li>なによりも、みんなで楽しむこと！✨</li>
+                    </ol>
                 </div>
             </div>
 
-            <div class="info-section admins">
-                <div class="info-title">🛡️ Our Admins</div>
-                <ul>
-                    <li>👑 superadmin</li>
-                    <li>⚔️ admin</li>
-                </ul>
-            </div>
-
-        </div>
-
-        <div id="page-weekend" class="motd-content">
-            <div class="info-section">
-                <div class="info-title">🎉 Weekend Mode!</div>
-                <div class="info-text">
-                    週末もALETHEIAサーバーを楽しんでね！
+            <div id="page3" class="motd-content">
+                
+                <div class="info-section">
+                    <div class="info-title">ℹ️ About This Server</div>
+                    <div class="info-text">
+                        This server is running ULX.<br>
+                        To edit this default MOTD, open XGUI->Settings->Server->ULX MOTD, or edit data\ulx\motd.txt.
+                    </div>
                 </div>
+
+                <div class="info-section rules">
+                    <div class="info-title">📋 Rules</div>
+                    <ol>
+                        <li><strong>DON'T MESS WITH OTHER PLAYERS' STUFF.</strong> If they want help, they'll ask!</li>
+                        <li>Don't spam.</li>
+                        <li>Have fun.</li>
+                    </ol>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">📢 Reporting Rulebreakers</div>
+                    <ul>
+                        <li>Contact an available admin on this server and let them know.</li>
+                        <li>Use <strong>@</strong> before typing a chat message to send it to admins.</li>
+                        <li>If no admin is available, note the players name and the current time, then let an admin know as soon as they are available.</li>
+                    </ul>
+                </div>
+
+                <div class="info-section">
+                    <div class="info-title">🔧 Installed Addons</div>
+                    <div class="info-text">
+                        This server features various custom workshop and regular addons via ULX Mods!
+                    </div>
+                </div>
+
+                <div class="info-section admins">
+                    <div class="info-title">🛡️ Our Admins</div>
+                    <ul>
+                        <li>👑 superadmin</li>
+                        <li>⚔️ admin</li>
+                    </ul>
+                </div>
+
             </div>
+
         </div>
 
         <div class="motd-footer">
@@ -241,14 +253,34 @@
         </div>
     </div>
 
-<script>
-        // すべてのページを一度非表示にする（念のため）
-        document.getElementById('page-default').classList.remove('active');
-        document.getElementById('page-discord').classList.remove('active');
-        document.getElementById('page-weekend').classList.remove('active');
+    <script>
+        function switchPage(pageNumber) {
+            // すべてのコンテンツをいったん非表示にする
+            const contents = document.querySelectorAll('.motd-content');
+            contents.forEach(content => content.classList.remove('active-content'));
 
-        // 🌟 3ページ目（水曜日用だったルール画面）をいつでも強制的に表示！
-        document.getElementById('page-wednesday').classList.add('active');
+            // すべてのタブボタンの色を元に戻す
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active-tab'));
+
+            // クリックされたページのコンテンツとボタンだけを「アクティブ」にするよ！
+            document.getElementById('page' + pageNumber).classList.add('active-content');
+            tabs[pageNumber - 1].add('active-tab'); // インデックスは0から始まるので-1するよ
+        }
+        
+        // お姉ちゃんのちょっとしたバグ対策パッチ
+        // クラス名追加の書き方を調整
+        function switchPage(pageNumber) {
+            document.getElementById('page1').classList.remove('active-content');
+            document.getElementById('page2').classList.remove('active-content');
+            document.getElementById('page3').classList.remove('active-content');
+            
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(t => t.classList.remove('active-tab'));
+
+            document.getElementById('page' + pageNumber).classList.add('active-content');
+            tabs[pageNumber - 1].classList.add('active-tab');
+        }
     </script>
 </body>
 </html>
