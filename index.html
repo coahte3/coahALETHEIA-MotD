@@ -14,7 +14,6 @@
         .sat-bg { content: url("https://i.imgur.com/7V0V5Gk.gif"); }
         .sun-bg { content: url("https://i.imgur.com/yzhBM6x.gif"); }
         
-        /* 💡 英語のサブタイトルもGmod用に「Sandbox / Sandbox Life」等に変更したよ！ */
         .mon-sub::before { content: "Welcome Back . Monday Sandbox Life ."; }
         .tue-sub::before { content: "Welcome Player . Stay Creative. Have Fun ."; }
         .wed-sub::before { content: "Midweek Building Activated . Keep On Creating ."; }
@@ -23,7 +22,6 @@
         .sat-sub::before { content: "Weekend Sandbox MAX . Build Anything You Want ."; }
         .sun-sub::before { content: "Good Night Players . Relaxing Sunday ."; }
 
-        /* 💡 日本語のメッセージもGmod用に完全リニューアル！ */
         .mon-m::before { content: "今週も始まったよ！のんびり物作りしよう。"; }
         .tue-m::before { content: "焦らず、今日も自分のペースで楽しもう！"; }
         .wed-m::before { content: "水曜日。今日は何を作ってみる？"; }
@@ -50,11 +48,11 @@
         .page-btn { display: inline-block; background-color: #28a745; color: white; text-decoration: none; padding: 8px 16px; font-weight: bold; border-radius: 4px; cursor: pointer; border: none; font-size: 16px; margin-top: 15px; }
         .page-btn:hover { background-color: #218838; }
         
-        .discord-container { display: flex; align-items: center; gap: 10px; width: 90%; margin-top: 5px; }
-        .url-display { flex: 1; background: rgba(28, 28, 31, 0.9); border: 1px solid rgba(255,255,255,0.1); padding: 12px 15px; border-radius: 4px; font-size: 18px; font-weight: bold; font-family: monospace; cursor: pointer; box-shadow: inset 0 2px 5px rgba(0,0,0,0.5); }
-        
-        .discord-link-btn { display: inline-block; background-color: #5865F2; color: white; text-decoration: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 4px; transition: background-color 0.2s; white-space: nowrap; }
-        .discord-link-btn:hover { background-color: #4752C4; }
+        /* 🌟 コピーエリア用の新しいスタイル */
+        .copy-container { display: flex; flex-direction: column; width: 90%; margin-top: 5px; gap: 4px; }
+        .copy-hint { font-size: 14px; color: #8b949e; font-weight: bold; }
+        .url-display { background: rgba(28, 28, 31, 0.9); border: 2px dashed rgba(255,255,255,0.2); padding: 12px 15px; border-radius: 4px; font-size: 18px; font-weight: bold; font-family: monospace; cursor: pointer; text-align: center; transition: all 0.2s; }
+        .url-display:hover { background: rgba(40, 40, 45, 0.9); border-color: rgba(255,255,255,0.4); }
 
         .page-toggle-input { display: none; } 
         .page-2 { display: none; } 
@@ -70,14 +68,33 @@
 </div>
 
 <script>
-    (function() {
-        var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-        var shortDays = { mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat", sun: "Sun" };
-        var colors = { mon: "#3498db", tue: "#2ecc71", wed: "#f1c40f", thu: "#9b59b6", fri: "#ff6600", sat: "#e91e63", sun: "#95a5a6" };
+    // 🌟 どこをクリックしても一発でコピーできる関数（Gmodの古いブラウザでも動く互換仕様だよ！）
+    function copyDiscordLink(element) {
+        element.select();
+        element.setSelectionRange(0, 99999); // モバイル・特殊ブラウザ対策
+        document.execCommand("copy");
         
-        var now = new Date();
-        var today = days[now.getDay()];
+        // コピーしたよ！って視覚的にわかるように一瞬文字を変える演出✨
+        var originalValue = element.value;
+        element.value = "【 コピーしました！ブラウザに貼り付けてね 】";
+        element.style.backgroundColor = "#238636";
+        element.style.color = "#ffffff";
+        
+        setTimeout(function() {
+            element.value = originalValue;
+            element.style.backgroundColor = "rgba(28, 28, 31, 0.9)";
+            element.style.color = colors[today] || "#58a6ff";
+        }, 1500);
+    }
 
+    var colors = { mon: "#3498db", tue: "#2ecc71", wed: "#f1c40f", thu: "#9b59b6", fri: "#ff6600", sat: "#e91e63", sun: "#95a5a6" };
+    var days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+    var now = new Date();
+    var today = days[now.getDay()];
+
+    (function() {
+        var shortDays = { mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat", sun: "Sun" };
+        
         var containerHtml = '';
         days.forEach(function(day) {
             containerHtml += `
@@ -100,14 +117,14 @@
                     <div class="message-box">
                         <h1 class="title-en" style="font-size:32px; font-weight:800; text-transform:uppercase; margin-bottom:12px; color:#ff7b72;">SERVER RULES</h1>
                         <div class="rules-list">
-                            <div>1. <strong>DON'T MESS WITH OTHER PLAYERS' STUFF.</strong> (他の人の作った物で勝手に遊ばない！手伝う時は一言聞いてね)</div>
-                            <div>2. Don't spam. (プロップの連投やスパム、荒らし行為はNG！)</div>
-                            <div>3. Have fun. (なによりも、みんなで思いっきり楽しむこと！✨)</div>
+                            <div>1. <strong>DON'T MESS WITH OTHER PLAYERS' STUFF.</strong> (他の人のオブジェクトを荒らさない)</div>
+                            <div>2. Don't spam. (プロップの連投・スパムをしない)</div>
+                            <div>3. Have fun. (みんなで思いっきり楽しむこと！✨)</div>
                         </div>
                         
-                        <div class="discord-container">
-                            <input type="text" id="u-${day}" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="this.select();">
-                            <a href="https://discord.gg/xV62vjSE2" class="discord-link-btn" target="_blank">Discordに参加 ➔</a>
+                        <div class="copy-container">
+                            <span class="copy-hint">👇 ここをクリックするとURLをコピーできるよ！</span>
+                            <input type="text" id="u-${day}" class="url-display" value="https://discord.gg/xV62vjSE2" readonly onclick="copyDiscordLink(this);">
                         </div>
 
                         <button type="button" class="page-btn" onclick="document.getElementById('p-${day}').checked=false;" style="margin-top: 20px; background-color:#6c757d;">最初のページに戻る ↩</button>
